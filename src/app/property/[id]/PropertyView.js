@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useActionState } from 'react'
-import { createReservation } from '@/app/actions/reservation'
+import { createReservation, deleteReservation } from '@/app/actions/reservation'
 import Calendar from '@/app/components/Calendar'
 import Modal from '@/app/components/Modal'
 import Link from 'next/link'
@@ -97,22 +97,37 @@ export default function PropertyView({ property }) {
                 .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
                 .map(reservation => (
                   <div key={reservation.id} className={styles.reservationCard}>
-                    <div className={styles.reservationDates}>
-                      <span className={styles.dateRange}>
-                        {formatDate(reservation.startDate)} → {formatDate(reservation.endDate)}
-                      </span>
+                    <div className={styles.reservationCardContent}>
+                      <div className={styles.reservationDates}>
+                        <span className={styles.dateRange}>
+                          {formatDate(reservation.startDate)} → {formatDate(reservation.endDate)}
+                        </span>
+                      </div>
+                      <div className={styles.reservationInfo}>
+                        <span className={styles.guests}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                          </svg>
+                          {reservation.guestsCount} {reservation.guestsCount === 1 ? 'gość' : reservation.guestsCount < 5 ? 'gości' : 'gości'}
+                        </span>
+                        {reservation.description && (
+                          <span className={styles.description}>{reservation.description}</span>
+                        )}
+                      </div>
                     </div>
-                    <div className={styles.reservationInfo}>
-                      <span className={styles.guests}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                          <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                        {reservation.guestsCount} {reservation.guestsCount === 1 ? 'gość' : reservation.guestsCount < 5 ? 'gości' : 'gości'}
-                      </span>
-                      {reservation.description && (
-                        <span className={styles.description}>{reservation.description}</span>
-                      )}
+                    <div className={styles.reservationActions}>
+                      <form action={deleteReservation}>
+                        <input type="hidden" name="reservationId" value={reservation.id} />
+                        <input type="hidden" name="propertyId" value={property.id} />
+                        <button type="submit" className={styles.deleteBtn} title="Usuń rezerwację" onClick={(e) => {
+                          if(!confirm('Czy na pewno chcesz usunąć tę rezerwację?')) e.preventDefault();
+                        }}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          </svg>
+                        </button>
+                      </form>
                     </div>
                   </div>
                 ))}
