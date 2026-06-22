@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import styles from './Calendar.module.css'
 
 const DAYS_PL = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Ndz']
@@ -9,8 +9,15 @@ const MONTHS_PL = [
   'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'
 ]
 
-export default function Calendar({ reservations = [], onDayClick }) {
+export default function Calendar({ reservations = [], onDayClick, onDateChange }) {
   const [currentDate, setCurrentDate] = useState(new Date())
+
+  // Emit initial date on mount
+  useEffect(() => {
+    if (onDateChange) {
+      onDateChange(currentDate.getFullYear(), currentDate.getMonth())
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
@@ -58,15 +65,21 @@ export default function Calendar({ reservations = [], onDayClick }) {
   }, [year, month, reservations])
 
   const goToPrevMonth = () => {
-    setCurrentDate(new Date(year, month - 1, 1))
+    const newDate = new Date(year, month - 1, 1)
+    setCurrentDate(newDate)
+    if (onDateChange) onDateChange(newDate.getFullYear(), newDate.getMonth())
   }
 
   const goToNextMonth = () => {
-    setCurrentDate(new Date(year, month + 1, 1))
+    const newDate = new Date(year, month + 1, 1)
+    setCurrentDate(newDate)
+    if (onDateChange) onDateChange(newDate.getFullYear(), newDate.getMonth())
   }
 
   const goToToday = () => {
-    setCurrentDate(new Date())
+    const newDate = new Date()
+    setCurrentDate(newDate)
+    if (onDateChange) onDateChange(newDate.getFullYear(), newDate.getMonth())
   }
 
   return (
