@@ -15,6 +15,7 @@ export async function createReservation(prevState, formData) {
   const guestsCount = parseInt(formData.get('guestsCount')?.toString() || '1')
   const pricePerNight = parseFloat(formData.get('pricePerNight')?.toString() || '0')
   const description = formData.get('description')?.toString().trim() || null
+  const phoneNumber = formData.get('phoneNumber')?.toString().trim() || null
 
   if (!startDate || !endDate) {
     return { error: 'Podaj datę rozpoczęcia i zakończenia.' }
@@ -54,6 +55,7 @@ export async function createReservation(prevState, formData) {
       guestsCount,
       pricePerNight,
       description,
+      phoneNumber,
     },
   })
 
@@ -80,6 +82,7 @@ export async function updateReservation(prevState, formData) {
   const guestsCount = parseInt(formData.get('guestsCount')?.toString() || '1')
   const pricePerNight = parseFloat(formData.get('pricePerNight')?.toString() || '0')
   const description = formData.get('description')?.toString().trim() || null
+  const phoneNumber = formData.get('phoneNumber')?.toString().trim() || null
 
   if (!startDate || !endDate) {
     return { error: 'Podaj datę rozpoczęcia i zakończenia.' }
@@ -110,7 +113,7 @@ export async function updateReservation(prevState, formData) {
 
   await prisma.reservation.update({
     where: { id: reservationId },
-    data: { startDate: start, endDate: end, guestsCount, pricePerNight, description },
+    data: { startDate: start, endDate: end, guestsCount, pricePerNight, description, phoneNumber },
   })
 
   revalidatePath(`/property/${propertyId}`)

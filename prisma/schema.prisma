@@ -48,6 +48,7 @@ model Reservation {
   guestsCount Int      @default(1)
   pricePerNight Float? @default(0)
   description String?
+  phoneNumber String?
   createdAt   DateTime @default(now())
   property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }
