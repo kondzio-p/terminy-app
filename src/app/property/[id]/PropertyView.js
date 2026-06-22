@@ -117,7 +117,7 @@ export default function PropertyView({ property }) {
                       </div>
                     </div>
                     <div className={styles.reservationActions}>
-                      <form action={deleteReservation}>
+                      <form action={deleteReservation.bind(null, undefined)}>
                         <input type="hidden" name="reservationId" value={reservation.id} />
                         <input type="hidden" name="propertyId" value={property.id} />
                         <button type="submit" className={styles.deleteBtn} title="Usuń rezerwację" onClick={(e) => {
