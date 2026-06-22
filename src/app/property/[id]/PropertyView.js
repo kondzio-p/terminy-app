@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useActionState } from 'react'
-import { createReservation, deleteReservation } from '@/app/actions/reservation'
+import { createReservation, deleteReservation, updateReservation } from '@/app/actions/reservation'
 import Calendar from '@/app/components/Calendar'
 import Modal from '@/app/components/Modal'
 import Link from 'next/link'
@@ -10,6 +10,8 @@ import styles from './property.module.css'
 export default function PropertyView({ property }) {
   const [showForm, setShowForm] = useState(false)
   const [selectedDay, setSelectedDay] = useState(null)
+  const [editingReservation, setEditingReservation] = useState(null)
+  const [reservationToDelete, setReservationToDelete] = useState(null)
   const [visibleMonth, setVisibleMonth] = useState({ year: new Date().getFullYear(), month: new Date().getMonth() })
 
   const calculateMonthlyIncome = () => {
@@ -39,6 +41,14 @@ export default function PropertyView({ property }) {
     const result = await createReservation(prevState, formData)
     if (result?.success && !result?.warning) {
       setShowForm(false)
+    }
+    return result
+  }, undefined)
+
+  const [editState, editAction, editPending] = useActionState(async (prevState, formData) => {
+    const result = await updateReservation(prevState, formData)
+    if (result?.success && !result?.warning) {
+      setEditingReservation(null)
     }
     return result
   }, undefined)
@@ -145,17 +155,21 @@ export default function PropertyView({ property }) {
                       </div>
                     </div>
                     <div className={styles.reservationActions}>
-                      <form action={deleteReservation.bind(null, undefined)}>
-                        <input type="hidden" name="reservationId" value={reservation.id} />
-                        <input type="hidden" name="propertyId" value={property.id} />
-                        <button type="submit" className={styles.deleteBtn} title="Usuń rezerwację" onClick={(e) => {
-                          if(!confirm('Czy na pewno chcesz usunąć tę rezerwację?')) e.preventDefault();
-                        }}>
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          </svg>
-                        </button>
-                      </form>
+                      <button 
+                        className={styles.editBtn} 
+                        title="Edytuj rezerwację" 
+                        onClick={() => setEditingReservation(reservation)}
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                      </button>
+                      <button type="button" className={styles.deleteBtn} title="Usuń rezerwację" onClick={() => setReservationToDelete(reservation)}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -240,6 +254,94 @@ export default function PropertyView({ property }) {
             </div>
           </div>
         ))}
+      {/* Edit Reservation Modal */}
+      <Modal isOpen={!!editingReservation} onClose={() => setEditingReservation(null)} title="Edytuj rezerwację">
+        <form action={editAction} className={styles.form}>
+          <input type="hidden" name="reservationId" value={editingReservation?.id || ''} />
+          <input type="hidden" name="propertyId" value={property.id} />
+
+          {editState?.error && <div className="error-message">{editState.error}</div>}
+          {editState?.warning && <div className="warning-message">{editState.warning}</div>}
+
+          <div className="form-group">
+            <label htmlFor="editStartDate">Data rozpoczęcia</label>
+            <input 
+              id="editStartDate" 
+              name="startDate" 
+              type="date" 
+              defaultValue={editingReservation ? new Date(editingReservation.startDate).toISOString().split('T')[0] : ''} 
+              required 
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="editEndDate">Data zakończenia</label>
+            <input 
+              id="editEndDate" 
+              name="endDate" 
+              type="date" 
+              defaultValue={editingReservation ? new Date(editingReservation.endDate).toISOString().split('T')[0] : ''} 
+              required 
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="editGuestsCount">Liczba gości</label>
+            <input
+              id="editGuestsCount"
+              name="guestsCount"
+              type="number"
+              min="1"
+              defaultValue={editingReservation?.guestsCount || 1}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="editDescription">Opis (opcjonalny)</label>
+            <input
+              id="editDescription"
+              name="description"
+              type="text"
+              defaultValue={editingReservation?.description || ''}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="editPricePerNight">Koszt za dobę (zł)</label>
+            <input
+              id="editPricePerNight"
+              name="pricePerNight"
+              type="number"
+              min="0"
+              step="1"
+              defaultValue={editingReservation?.pricePerNight || 0}
+            />
+          </div>
+
+          <button type="submit" className={`btn btn-primary ${styles.submitBtn}`} disabled={editPending}>
+            {editPending ? 'Zapisywanie...' : 'Zapisz zmiany'}
+          </button>
+        </form>
+      </Modal>
+
+      {/* Confirm Delete Modal */}
+      <Modal isOpen={!!reservationToDelete} onClose={() => setReservationToDelete(null)} title="Potwierdzenie usunięcia">
+        <div className={styles.confirmModalBody}>
+          <p>Czy na pewno chcesz trwale usunąć wybraną rezerwację?</p>
+          <div className={styles.confirmModalActions}>
+            <button type="button" className="btn btn-outline" onClick={() => setReservationToDelete(null)}>
+              Anuluj
+            </button>
+            <form action={deleteReservation.bind(null, undefined)} onSubmit={() => setReservationToDelete(null)}>
+              <input type="hidden" name="reservationId" value={reservationToDelete?.id || ''} />
+              <input type="hidden" name="propertyId" value={property.id} />
+              <button type="submit" className="btn btn-primary" style={{ background: 'var(--color-danger)', borderColor: 'var(--color-danger)' }}>
+                Tak, usuń rezerwację
+              </button>
+            </form>
+          </div>
+        </div>
       </Modal>
     </main>
   )

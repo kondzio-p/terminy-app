@@ -134,14 +134,27 @@
 .reservationActions {
   display: flex;
   align-items: center;
+  gap: var(--space-2);
 }
 
-.deleteBtn {
-  color: var(--color-danger);
+.editBtn, .deleteBtn {
   padding: var(--space-2);
   border-radius: var(--radius-md);
   opacity: 0.7;
   transition: all var(--transition-fast);
+}
+
+.editBtn {
+  color: var(--color-warning);
+}
+
+.editBtn:hover {
+  opacity: 1;
+  background: var(--color-warning-light);
+}
+
+.deleteBtn {
+  color: var(--color-danger);
 }
 
 .deleteBtn:hover {
@@ -215,6 +228,25 @@
 .dayDetailInfo {
   font-size: 0.82rem;
   color: var(--color-text-secondary);
+}
+
+.confirmModalBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-4) 0 var(--space-2) 0;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.confirmModalActions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.confirmModalActions .btn {
+  flex: 1;
 }
 
 @media (max-width: 768px) {
