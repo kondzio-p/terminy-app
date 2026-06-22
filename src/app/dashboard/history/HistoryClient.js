@@ -19,18 +19,26 @@ const getMonthYear = (dateStr) => {
   return `${date.getFullYear()}-${month}`
 }
 
-const formatMonthYear = (yyyyMm) => {
-  const [year, month] = yyyyMm.split('-')
-  const date = new Date(year, parseInt(month) - 1, 1)
-  return date.toLocaleDateString('pl-PL', {
-    month: 'long',
-    year: 'numeric'
-  })
-}
+const MONTHS = [
+  { value: 'all', label: 'Zawsze' },
+  { value: '01', label: 'Styczeń' },
+  { value: '02', label: 'Luty' },
+  { value: '03', label: 'Marzec' },
+  { value: '04', label: 'Kwiecień' },
+  { value: '05', label: 'Maj' },
+  { value: '06', label: 'Czerwiec' },
+  { value: '07', label: 'Lipiec' },
+  { value: '08', label: 'Sierpień' },
+  { value: '09', label: 'Wrzesień' },
+  { value: '10', label: 'Październik' },
+  { value: '11', label: 'Listopad' },
+  { value: '12', label: 'Grudzień' },
+]
 
 export default function HistoryClient({ allReservations }) {
   const [propertyFilter, setPropertyFilter] = useState('all')
-  const [periodFilter, setPeriodFilter] = useState('all')
+  const [filterYear, setFilterYear] = useState('all')
+  const [filterMonth, setFilterMonth] = useState('all')
 
   // Generate unique properties for filter
   const properties = useMemo(() => {
@@ -43,11 +51,11 @@ export default function HistoryClient({ allReservations }) {
     return Array.from(map.entries()).map(([id, name]) => ({ id, name }))
   }, [allReservations])
 
-  // Generate unique periods (YYYY-MM) for filter
-  const periods = useMemo(() => {
+  // Generate unique years for filter
+  const availableYears = useMemo(() => {
     const set = new Set()
     allReservations.forEach(r => {
-      set.add(getMonthYear(r.startDate))
+      set.add(new Date(r.startDate).getFullYear().toString())
     })
     return Array.from(set).sort((a, b) => b.localeCompare(a)) // sort descending
   }, [allReservations])
@@ -56,10 +64,17 @@ export default function HistoryClient({ allReservations }) {
   const filteredReservations = useMemo(() => {
     return allReservations.filter(r => {
       const matchProperty = propertyFilter === 'all' || r.propertyId === propertyFilter
-      const matchPeriod = periodFilter === 'all' || getMonthYear(r.startDate) === periodFilter
-      return matchProperty && matchPeriod
+      
+      const date = new Date(r.startDate)
+      const year = date.getFullYear().toString()
+      const month = String(date.getMonth() + 1).padStart(2, '0')
+
+      const matchYear = filterYear === 'all' || year === filterYear
+      const matchMonth = filterMonth === 'all' || month === filterMonth
+
+      return matchProperty && matchYear && matchMonth
     })
-  }, [allReservations, propertyFilter, periodFilter])
+  }, [allReservations, propertyFilter, filterYear, filterMonth])
 
   const totalFilteredIncome = filteredReservations.reduce((sum, r) => sum + r.totalIncome, 0)
 
@@ -96,21 +111,35 @@ export default function HistoryClient({ allReservations }) {
         </div>
 
         <div className={styles.filterGroup}>
-          <label htmlFor="periodFilter">Okres:</label>
+          <label htmlFor="filterYear">Rok:</label>
           <select 
-            id="periodFilter" 
-            value={periodFilter} 
-            onChange={(e) => setPeriodFilter(e.target.value)}
+            id="filterYear" 
+            value={filterYear} 
+            onChange={(e) => setFilterYear(e.target.value)}
             className={styles.filterSelect}
           >
             <option value="all">Zawsze</option>
-            {periods.map(period => (
-              <option key={period} value={period}>
-                {formatMonthYear(period).charAt(0).toUpperCase() + formatMonthYear(period).slice(1)}
-              </option>
+            {availableYears.map(year => (
+              <option key={year} value={year}>{year}</option>
             ))}
           </select>
         </div>
+
+        {filterYear !== 'all' && (
+          <div className={styles.filterGroup}>
+            <label htmlFor="filterMonth">Miesiąc:</label>
+            <select 
+              id="filterMonth" 
+              value={filterMonth} 
+              onChange={(e) => setFilterMonth(e.target.value)}
+              className={styles.filterSelect}
+            >
+              {MONTHS.map(m => (
+                <option key={m.value} value={m.value}>{m.label}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       <div className={styles.list}>
