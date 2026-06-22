@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Color palette - Light Premium Theme */
-  --color-primary: #4F46E5;
-  --color-primary-light: #818CF8;
-  --color-primary-dark: #3730A3;
-  --color-primary-50: #EEF2FF;
-  --color-primary-100: #E0E7FF;
+  /* Color palette - Navy Blue Theme */
+  --color-primary: #1E3A8A;
+  --color-primary-light: #3B82F6;
+  --color-primary-dark: #172554;
+  --color-primary-50: #EFF6FF;
+  --color-primary-100: #DBEAFE;
 
   --color-bg: #F8FAFC;
   --color-bg-alt: #F1F5F9;
