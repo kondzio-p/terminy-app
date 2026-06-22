@@ -87,6 +87,9 @@ Prisma.NullTypes = NullTypes
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -127,6 +130,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
@@ -146,8 +154,8 @@ const config = {
   "previewFeatures": [],
   "clientVersion": "7.8.0",
   "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
-  "activeProvider": "sqlite",
-  "inlineSchema": "// Prisma schema for Terminy App\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel User {\n  id             String                 @id @default(cuid())\n  email          String                 @unique\n  passwordHash   String\n  name           String\n  createdAt      DateTime               @default(now())\n  properties     Property[]\n  collaborations PropertyCollaborator[]\n}\n\nmodel Property {\n  id            String                 @id @default(cuid())\n  name          String\n  ownerId       String\n  createdAt     DateTime               @default(now())\n  owner         User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)\n  collaborators PropertyCollaborator[]\n  reservations  Reservation[]\n}\n\nmodel PropertyCollaborator {\n  id         String   @id @default(cuid())\n  propertyId String\n  userId     String\n  createdAt  DateTime @default(now())\n  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)\n  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([propertyId, userId])\n}\n\nmodel Reservation {\n  id          String   @id @default(cuid())\n  propertyId  String\n  startDate   DateTime\n  endDate     DateTime\n  guestsCount Int      @default(1)\n  description String?\n  createdAt   DateTime @default(now())\n  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)\n}\n"
+  "activeProvider": "postgresql",
+  "inlineSchema": "// Prisma schema for Terminy App\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id             String                 @id @default(cuid())\n  email          String                 @unique\n  passwordHash   String\n  name           String\n  createdAt      DateTime               @default(now())\n  properties     Property[]\n  collaborations PropertyCollaborator[]\n}\n\nmodel Property {\n  id            String                 @id @default(cuid())\n  name          String\n  ownerId       String\n  createdAt     DateTime               @default(now())\n  owner         User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)\n  collaborators PropertyCollaborator[]\n  reservations  Reservation[]\n}\n\nmodel PropertyCollaborator {\n  id         String   @id @default(cuid())\n  propertyId String\n  userId     String\n  createdAt  DateTime @default(now())\n  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)\n  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([propertyId, userId])\n}\n\nmodel Reservation {\n  id          String   @id @default(cuid())\n  propertyId  String\n  startDate   DateTime\n  endDate     DateTime\n  guestsCount Int      @default(1)\n  description String?\n  createdAt   DateTime @default(now())\n  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)\n}\n"
 }
 
 config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"properties\",\"kind\":\"object\",\"type\":\"Property\",\"relationName\":\"PropertyToUser\"},{\"name\":\"collaborations\",\"kind\":\"object\",\"type\":\"PropertyCollaborator\",\"relationName\":\"PropertyCollaboratorToUser\"}],\"dbName\":null},\"Property\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"owner\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PropertyToUser\"},{\"name\":\"collaborators\",\"kind\":\"object\",\"type\":\"PropertyCollaborator\",\"relationName\":\"PropertyToPropertyCollaborator\"},{\"name\":\"reservations\",\"kind\":\"object\",\"type\":\"Reservation\",\"relationName\":\"PropertyToReservation\"}],\"dbName\":null},\"PropertyCollaborator\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"propertyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"property\",\"kind\":\"object\",\"type\":\"Property\",\"relationName\":\"PropertyToPropertyCollaborator\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PropertyCollaboratorToUser\"}],\"dbName\":null},\"Reservation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"propertyId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"guestsCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"property\",\"kind\":\"object\",\"type\":\"Property\",\"relationName\":\"PropertyToReservation\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
