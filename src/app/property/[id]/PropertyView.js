@@ -10,6 +10,30 @@ import styles from './property.module.css'
 export default function PropertyView({ property }) {
   const [showForm, setShowForm] = useState(false)
   const [selectedDay, setSelectedDay] = useState(null)
+  const [visibleMonth, setVisibleMonth] = useState({ year: new Date().getFullYear(), month: new Date().getMonth() })
+
+  const calculateMonthlyIncome = () => {
+    let total = 0
+    property.reservations.forEach(r => {
+      if (!r.pricePerNight) return
+      
+      const start = new Date(r.startDate)
+      const end = new Date(r.endDate)
+      start.setHours(0,0,0,0)
+      end.setHours(0,0,0,0)
+      
+      let currentDate = new Date(start)
+      while (currentDate < end) {
+        if (currentDate.getFullYear() === visibleMonth.year && currentDate.getMonth() === visibleMonth.month) {
+          total += r.pricePerNight
+        }
+        currentDate.setDate(currentDate.getDate() + 1)
+      }
+    })
+    return total
+  }
+
+  const monthlyIncome = calculateMonthlyIncome()
 
   const [state, action, pending] = useActionState(async (prevState, formData) => {
     const result = await createReservation(prevState, formData)
@@ -67,9 +91,13 @@ export default function PropertyView({ property }) {
 
         {/* Calendar */}
         <div className={styles.calendarWrapper}>
+          <div className={styles.monthlyIncome}>
+            <span>Przewidywany przychód w tym miesiącu: <strong>{monthlyIncome} zł</strong></span>
+          </div>
           <Calendar
             reservations={property.reservations}
             onDayClick={handleDayClick}
+            onDateChange={(year, month) => setVisibleMonth({ year, month })}
           />
         </div>
 
@@ -174,6 +202,18 @@ export default function PropertyView({ property }) {
               name="description"
               type="text"
               placeholder="np. Rodzina Kowalskich"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="pricePerNight">Koszt za dobę (zł)</label>
+            <input
+              id="pricePerNight"
+              name="pricePerNight"
+              type="number"
+              min="0"
+              step="1"
+              defaultValue="0"
             />
           </div>
 

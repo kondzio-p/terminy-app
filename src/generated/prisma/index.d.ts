@@ -4501,10 +4501,12 @@ export namespace Prisma {
 
   export type ReservationAvgAggregateOutputType = {
     guestsCount: number | null
+    pricePerNight: number | null
   }
 
   export type ReservationSumAggregateOutputType = {
     guestsCount: number | null
+    pricePerNight: number | null
   }
 
   export type ReservationMinAggregateOutputType = {
@@ -4513,6 +4515,7 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     guestsCount: number | null
+    pricePerNight: number | null
     description: string | null
     createdAt: Date | null
   }
@@ -4523,6 +4526,7 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     guestsCount: number | null
+    pricePerNight: number | null
     description: string | null
     createdAt: Date | null
   }
@@ -4533,6 +4537,7 @@ export namespace Prisma {
     startDate: number
     endDate: number
     guestsCount: number
+    pricePerNight: number
     description: number
     createdAt: number
     _all: number
@@ -4541,10 +4546,12 @@ export namespace Prisma {
 
   export type ReservationAvgAggregateInputType = {
     guestsCount?: true
+    pricePerNight?: true
   }
 
   export type ReservationSumAggregateInputType = {
     guestsCount?: true
+    pricePerNight?: true
   }
 
   export type ReservationMinAggregateInputType = {
@@ -4553,6 +4560,7 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     guestsCount?: true
+    pricePerNight?: true
     description?: true
     createdAt?: true
   }
@@ -4563,6 +4571,7 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     guestsCount?: true
+    pricePerNight?: true
     description?: true
     createdAt?: true
   }
@@ -4573,6 +4582,7 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     guestsCount?: true
+    pricePerNight?: true
     description?: true
     createdAt?: true
     _all?: true
@@ -4670,6 +4680,7 @@ export namespace Prisma {
     startDate: Date
     endDate: Date
     guestsCount: number
+    pricePerNight: number | null
     description: string | null
     createdAt: Date
     _count: ReservationCountAggregateOutputType | null
@@ -4699,6 +4710,7 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     guestsCount?: boolean
+    pricePerNight?: boolean
     description?: boolean
     createdAt?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
@@ -4710,6 +4722,7 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     guestsCount?: boolean
+    pricePerNight?: boolean
     description?: boolean
     createdAt?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
@@ -4721,6 +4734,7 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     guestsCount?: boolean
+    pricePerNight?: boolean
     description?: boolean
     createdAt?: boolean
     property?: boolean | PropertyDefaultArgs<ExtArgs>
@@ -4732,11 +4746,12 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     guestsCount?: boolean
+    pricePerNight?: boolean
     description?: boolean
     createdAt?: boolean
   }
 
-  export type ReservationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "propertyId" | "startDate" | "endDate" | "guestsCount" | "description" | "createdAt", ExtArgs["result"]["reservation"]>
+  export type ReservationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "propertyId" | "startDate" | "endDate" | "guestsCount" | "pricePerNight" | "description" | "createdAt", ExtArgs["result"]["reservation"]>
   export type ReservationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     property?: boolean | PropertyDefaultArgs<ExtArgs>
   }
@@ -4758,6 +4773,7 @@ export namespace Prisma {
       startDate: Date
       endDate: Date
       guestsCount: number
+      pricePerNight: number | null
       description: string | null
       createdAt: Date
     }, ExtArgs["result"]["reservation"]>
@@ -5189,6 +5205,7 @@ export namespace Prisma {
     readonly startDate: FieldRef<"Reservation", 'DateTime'>
     readonly endDate: FieldRef<"Reservation", 'DateTime'>
     readonly guestsCount: FieldRef<"Reservation", 'Int'>
+    readonly pricePerNight: FieldRef<"Reservation", 'Float'>
     readonly description: FieldRef<"Reservation", 'String'>
     readonly createdAt: FieldRef<"Reservation", 'DateTime'>
   }
@@ -5661,6 +5678,7 @@ export namespace Prisma {
     startDate: 'startDate',
     endDate: 'endDate',
     guestsCount: 'guestsCount',
+    pricePerNight: 'pricePerNight',
     description: 'description',
     createdAt: 'createdAt'
   };
@@ -5933,6 +5951,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Reservation"> | Date | string
     endDate?: DateTimeFilter<"Reservation"> | Date | string
     guestsCount?: IntFilter<"Reservation"> | number
+    pricePerNight?: FloatNullableFilter<"Reservation"> | number | null
     description?: StringNullableFilter<"Reservation"> | string | null
     createdAt?: DateTimeFilter<"Reservation"> | Date | string
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
@@ -5944,6 +5963,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     guestsCount?: SortOrder
+    pricePerNight?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     property?: PropertyOrderByWithRelationInput
@@ -5958,6 +5978,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Reservation"> | Date | string
     endDate?: DateTimeFilter<"Reservation"> | Date | string
     guestsCount?: IntFilter<"Reservation"> | number
+    pricePerNight?: FloatNullableFilter<"Reservation"> | number | null
     description?: StringNullableFilter<"Reservation"> | string | null
     createdAt?: DateTimeFilter<"Reservation"> | Date | string
     property?: XOR<PropertyScalarRelationFilter, PropertyWhereInput>
@@ -5969,6 +5990,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     guestsCount?: SortOrder
+    pricePerNight?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ReservationCountOrderByAggregateInput
@@ -5987,6 +6009,7 @@ export namespace Prisma {
     startDate?: DateTimeWithAggregatesFilter<"Reservation"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"Reservation"> | Date | string
     guestsCount?: IntWithAggregatesFilter<"Reservation"> | number
+    pricePerNight?: FloatNullableWithAggregatesFilter<"Reservation"> | number | null
     description?: StringNullableWithAggregatesFilter<"Reservation"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Reservation"> | Date | string
   }
@@ -6163,6 +6186,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     guestsCount?: number
+    pricePerNight?: number | null
     description?: string | null
     createdAt?: Date | string
     property: PropertyCreateNestedOneWithoutReservationsInput
@@ -6174,6 +6198,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     guestsCount?: number
+    pricePerNight?: number | null
     description?: string | null
     createdAt?: Date | string
   }
@@ -6183,6 +6208,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     guestsCount?: IntFieldUpdateOperationsInput | number
+    pricePerNight?: NullableFloatFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     property?: PropertyUpdateOneRequiredWithoutReservationsNestedInput
@@ -6194,6 +6220,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     guestsCount?: IntFieldUpdateOperationsInput | number
+    pricePerNight?: NullableFloatFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6204,6 +6231,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     guestsCount?: number
+    pricePerNight?: number | null
     description?: string | null
     createdAt?: Date | string
   }
@@ -6213,6 +6241,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     guestsCount?: IntFieldUpdateOperationsInput | number
+    pricePerNight?: NullableFloatFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6223,6 +6252,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     guestsCount?: IntFieldUpdateOperationsInput | number
+    pricePerNight?: NullableFloatFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6407,6 +6437,17 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6433,12 +6474,14 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     guestsCount?: SortOrder
+    pricePerNight?: SortOrder
     description?: SortOrder
     createdAt?: SortOrder
   }
 
   export type ReservationAvgOrderByAggregateInput = {
     guestsCount?: SortOrder
+    pricePerNight?: SortOrder
   }
 
   export type ReservationMaxOrderByAggregateInput = {
@@ -6447,6 +6490,7 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     guestsCount?: SortOrder
+    pricePerNight?: SortOrder
     description?: SortOrder
     createdAt?: SortOrder
   }
@@ -6457,12 +6501,14 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     guestsCount?: SortOrder
+    pricePerNight?: SortOrder
     description?: SortOrder
     createdAt?: SortOrder
   }
 
   export type ReservationSumOrderByAggregateInput = {
     guestsCount?: SortOrder
+    pricePerNight?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -6479,6 +6525,22 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6731,6 +6793,14 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
@@ -6810,6 +6880,17 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6851,6 +6932,33 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6866,17 +6974,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type PropertyCreateWithoutOwnerInput = {
@@ -7029,6 +7126,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     guestsCount?: number
+    pricePerNight?: number | null
     description?: string | null
     createdAt?: Date | string
   }
@@ -7038,6 +7136,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     guestsCount?: number
+    pricePerNight?: number | null
     description?: string | null
     createdAt?: Date | string
   }
@@ -7122,6 +7221,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"Reservation"> | Date | string
     endDate?: DateTimeFilter<"Reservation"> | Date | string
     guestsCount?: IntFilter<"Reservation"> | number
+    pricePerNight?: FloatNullableFilter<"Reservation"> | number | null
     description?: StringNullableFilter<"Reservation"> | string | null
     createdAt?: DateTimeFilter<"Reservation"> | Date | string
   }
@@ -7337,6 +7437,7 @@ export namespace Prisma {
     startDate: Date | string
     endDate: Date | string
     guestsCount?: number
+    pricePerNight?: number | null
     description?: string | null
     createdAt?: Date | string
   }
@@ -7364,6 +7465,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     guestsCount?: IntFieldUpdateOperationsInput | number
+    pricePerNight?: NullableFloatFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7373,6 +7475,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     guestsCount?: IntFieldUpdateOperationsInput | number
+    pricePerNight?: NullableFloatFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7382,6 +7485,7 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     guestsCount?: IntFieldUpdateOperationsInput | number
+    pricePerNight?: NullableFloatFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

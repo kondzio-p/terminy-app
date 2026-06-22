@@ -13,6 +13,7 @@ export async function createReservation(prevState, formData) {
   const startDate = formData.get('startDate')?.toString()
   const endDate = formData.get('endDate')?.toString()
   const guestsCount = parseInt(formData.get('guestsCount')?.toString() || '1')
+  const pricePerNight = parseFloat(formData.get('pricePerNight')?.toString() || '0')
   const description = formData.get('description')?.toString().trim() || null
 
   if (!startDate || !endDate) {
@@ -51,6 +52,7 @@ export async function createReservation(prevState, formData) {
       startDate: start,
       endDate: end,
       guestsCount,
+      pricePerNight,
       description,
     },
   })
@@ -76,6 +78,7 @@ export async function updateReservation(prevState, formData) {
   const startDate = formData.get('startDate')?.toString()
   const endDate = formData.get('endDate')?.toString()
   const guestsCount = parseInt(formData.get('guestsCount')?.toString() || '1')
+  const pricePerNight = parseFloat(formData.get('pricePerNight')?.toString() || '0')
   const description = formData.get('description')?.toString().trim() || null
 
   if (!startDate || !endDate) {
@@ -107,7 +110,7 @@ export async function updateReservation(prevState, formData) {
 
   await prisma.reservation.update({
     where: { id: reservationId },
-    data: { startDate: start, endDate: end, guestsCount, description },
+    data: { startDate: start, endDate: end, guestsCount, pricePerNight, description },
   })
 
   revalidatePath(`/property/${propertyId}`)

@@ -41,12 +41,13 @@ model PropertyCollaborator {
 }
 
 model Reservation {
-  id          String   @id @default(cuid())
-  propertyId  String
-  startDate   DateTime
-  endDate     DateTime
-  guestsCount Int      @default(1)
-  description String?
-  createdAt   DateTime @default(now())
-  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  id            String   @id @default(cuid())
+  propertyId    String
+  startDate     DateTime
+  endDate       DateTime
+  guestsCount   Int      @default(1)
+  pricePerNight Float?   @default(0)
+  description   String?
+  createdAt     DateTime @default(now())
+  property      Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }

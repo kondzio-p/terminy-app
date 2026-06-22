@@ -148,6 +148,7 @@ exports.Prisma.ReservationScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   guestsCount: 'guestsCount',
+  pricePerNight: 'pricePerNight',
   description: 'description',
   createdAt: 'createdAt'
 };

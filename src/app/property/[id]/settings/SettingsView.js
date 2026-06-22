@@ -262,6 +262,18 @@ export default function SettingsView({ property }) {
               />
             </div>
 
+            <div className="form-group">
+              <label htmlFor="editPricePerNight">Koszt za dobę (zł)</label>
+              <input
+                id="editPricePerNight"
+                name="pricePerNight"
+                type="number"
+                min="0"
+                step="1"
+                defaultValue={editingReservation.pricePerNight || 0}
+              />
+            </div>
+
             <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={editPending}>
               {editPending ? 'Zapisywanie...' : 'Zapisz zmiany'}
             </button>

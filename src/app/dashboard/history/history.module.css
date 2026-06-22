@@ -1,0 +1,136 @@
+.main {
+  padding: var(--space-8) var(--space-6);
+  min-height: calc(100vh - 60px);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  animation: slideUp 0.4s ease;
+}
+
+.backBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.backBtn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: var(--color-primary-50);
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: slideUp 0.5s ease;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--color-primary-100);
+  box-shadow: var(--shadow-sm);
+}
+
+.infoLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.propertyName {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+.reservationDates {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.description {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.infoRight {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+}
+
+.income {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.calcDetails {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+.empty {
+  text-align: center;
+  padding: var(--space-12) var(--space-4);
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  .infoRight {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
