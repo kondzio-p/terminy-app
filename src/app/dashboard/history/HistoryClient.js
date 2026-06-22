@@ -20,7 +20,7 @@ const getMonthYear = (dateStr) => {
 }
 
 const MONTHS = [
-  { value: 'all', label: 'Zawsze' },
+  { value: 'all', label: 'Wszystkie miesiące' },
   { value: '01', label: 'Styczeń' },
   { value: '02', label: 'Luty' },
   { value: '03', label: 'Marzec' },
@@ -64,7 +64,7 @@ export default function HistoryClient({ allReservations }) {
   const filteredReservations = useMemo(() => {
     return allReservations.filter(r => {
       const matchProperty = propertyFilter === 'all' || r.propertyId === propertyFilter
-      
+
       const date = new Date(r.startDate)
       const year = date.getFullYear().toString()
       const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -83,7 +83,7 @@ export default function HistoryClient({ allReservations }) {
       <div className={styles.header}>
         <Link href="/dashboard" className={styles.backBtn}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6"/>
+            <polyline points="15 18 9 12 15 6" />
           </svg>
         </Link>
         <div>
@@ -97,9 +97,9 @@ export default function HistoryClient({ allReservations }) {
       <div className={styles.filters}>
         <div className={styles.filterGroup}>
           <label htmlFor="propertyFilter">Posiadłość:</label>
-          <select 
-            id="propertyFilter" 
-            value={propertyFilter} 
+          <select
+            id="propertyFilter"
+            value={propertyFilter}
             onChange={(e) => setPropertyFilter(e.target.value)}
             className={styles.filterSelect}
           >
@@ -112,9 +112,9 @@ export default function HistoryClient({ allReservations }) {
 
         <div className={styles.filterGroup}>
           <label htmlFor="filterYear">Rok:</label>
-          <select 
-            id="filterYear" 
-            value={filterYear} 
+          <select
+            id="filterYear"
+            value={filterYear}
             onChange={(e) => setFilterYear(e.target.value)}
             className={styles.filterSelect}
           >
@@ -128,9 +128,9 @@ export default function HistoryClient({ allReservations }) {
         {filterYear !== 'all' && (
           <div className={styles.filterGroup}>
             <label htmlFor="filterMonth">Miesiąc:</label>
-            <select 
-              id="filterMonth" 
-              value={filterMonth} 
+            <select
+              id="filterMonth"
+              value={filterMonth}
               onChange={(e) => setFilterMonth(e.target.value)}
               className={styles.filterSelect}
             >
@@ -158,8 +158,8 @@ export default function HistoryClient({ allReservations }) {
                 {res.description && (
                   <div className={styles.description}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                      <circle cx="12" cy="7" r="4"/>
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
                     </svg>
                     {res.description}
                   </div>
