@@ -153,6 +153,7 @@ export default function SettingsView({ property }) {
                     <div className={styles.reservationMeta}>
                       {reservation.guestsCount} {reservation.guestsCount === 1 ? 'gość' : 'gości'}
                       {reservation.description && ` • ${reservation.description}`}
+                      {reservation.phoneNumber && ` • 📞 ${reservation.phoneNumber}`}
                     </div>
                   </div>
                   <div className={styles.reservationActions}>
@@ -259,6 +260,17 @@ export default function SettingsView({ property }) {
                 name="description"
                 type="text"
                 defaultValue={editingReservation.description || ''}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="editPhoneNumber">Numer telefonu (opcjonalny)</label>
+              <input
+                id="editPhoneNumber"
+                name="phoneNumber"
+                type="tel"
+                defaultValue={editingReservation.phoneNumber || ''}
+                placeholder="np. +48 123 456 789"
               />
             </div>
 

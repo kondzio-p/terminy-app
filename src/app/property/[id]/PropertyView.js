@@ -152,6 +152,14 @@ export default function PropertyView({ property }) {
                         {reservation.description && (
                           <span className={styles.description}>{reservation.description}</span>
                         )}
+                        {reservation.phoneNumber && (
+                          <span className={styles.phoneNumber}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: 4}}>
+                              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            {reservation.phoneNumber}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className={styles.reservationActions}>
@@ -220,6 +228,16 @@ export default function PropertyView({ property }) {
           </div>
 
           <div className="form-group">
+            <label htmlFor="phoneNumber">Numer telefonu (opcjonalny)</label>
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="tel"
+              placeholder="np. +48 123 456 789"
+            />
+          </div>
+
+          <div className="form-group">
             <label htmlFor="pricePerNight">Koszt za dobę (zł)</label>
             <input
               id="pricePerNight"
@@ -251,6 +269,7 @@ export default function PropertyView({ property }) {
             <div className={styles.dayDetailInfo}>
               <span>{r.guestsCount} {r.guestsCount === 1 ? 'gość' : 'gości'}</span>
               {r.description && <span> • {r.description}</span>}
+              {r.phoneNumber && <span> • 📞 {r.phoneNumber}</span>}
             </div>
           </div>
         ))}
@@ -306,6 +325,17 @@ export default function PropertyView({ property }) {
               name="description"
               type="text"
               defaultValue={editingReservation?.description || ''}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="editPhoneNumber">Numer telefonu (opcjonalny)</label>
+            <input
+              id="editPhoneNumber"
+              name="phoneNumber"
+              type="tel"
+              defaultValue={editingReservation?.phoneNumber || ''}
+              placeholder="np. +48 123 456 789"
             />
           </div>
 
