@@ -5,9 +5,9 @@ import { PrismaPg } from '@prisma/adapter-pg'
 const globalForPrisma = globalThis
 
 function createPrismaClient() {
-  // During Vercel build, POSTGRES_PRISMA_URL might be undefined.
+  // During Vercel build, DATABASE_URL might be undefined.
   // Prisma 7 requires a valid adapter or URL string on initialization.
-  const connectionString = process.env.POSTGRES_PRISMA_URL || "postgres://dummy:dummy@localhost:5432/dummy"
+  const connectionString = process.env.DATABASE_URL || "postgres://dummy:dummy@localhost:5432/dummy"
   
   const pool = new Pool({ connectionString })
   const adapter = new PrismaPg(pool)
