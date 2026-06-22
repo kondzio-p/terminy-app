@@ -254,6 +254,8 @@ export default function PropertyView({ property }) {
             </div>
           </div>
         ))}
+      </Modal>
+
       {/* Edit Reservation Modal */}
       <Modal isOpen={!!editingReservation} onClose={() => setEditingReservation(null)} title="Edytuj rezerwację">
         <form action={editAction} className={styles.form}>
