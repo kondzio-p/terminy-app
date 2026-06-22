@@ -1,0 +1,52 @@
+// Prisma schema for Terminy App
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id             String                 @id @default(cuid())
+  email          String                 @unique
+  passwordHash   String
+  name           String
+  createdAt      DateTime               @default(now())
+  properties     Property[]
+  collaborations PropertyCollaborator[]
+}
+
+model Property {
+  id            String                 @id @default(cuid())
+  name          String
+  ownerId       String
+  createdAt     DateTime               @default(now())
+  owner         User                   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  collaborators PropertyCollaborator[]
+  reservations  Reservation[]
+}
+
+model PropertyCollaborator {
+  id         String   @id @default(cuid())
+  propertyId String
+  userId     String
+  createdAt  DateTime @default(now())
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([propertyId, userId])
+}
+
+model Reservation {
+  id          String   @id @default(cuid())
+  propertyId  String
+  startDate   DateTime
+  endDate     DateTime
+  guestsCount Int      @default(1)
+  description String?
+  createdAt   DateTime @default(now())
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+}
