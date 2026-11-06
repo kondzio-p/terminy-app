@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Pliki lokalne
+CLAUDE.md
+AGENTS.md
+*.db
+/src/generated/
